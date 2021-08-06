@@ -2,6 +2,7 @@ const Router = require('express').Router
 const UserController = require('../controllers/user-controller')
 const createUserSchema = require('../request/createUser')
 const createUserMiddleware = require('../middlewares/createUser-middleware')
+const authMiddleware = require('../middlewares/auth-middleware')
 
 
 const router = new Router();
@@ -10,6 +11,6 @@ router.post('/registration',createUserMiddleware(createUserSchema), UserControll
 router.post('/login',UserController.login);
 router.post('/logout',UserController.logout);
 router.get('/refresh',UserController.refresh);
-router.get('/users',UserController.getUsers);
+router.get('/users',authMiddleware, UserController.getUsers);
 
 module.exports = router
